@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: light; }
+  html.dark { color-scheme: dark; }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: "cv05" 1, "ss01" 1;
+  }
+
+  html.dark body { @apply bg-[#161011] text-[#F2EBE8]; }
+
+  /* Column-to-column alignment in every table and KPI. */
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  h1, h2, h3 { @apply font-display; letter-spacing: -0.012em; }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-wine/40 ring-offset-2 ring-offset-canvas rounded-lg;
+  }
+
+  ::selection { background: theme("colors.peach.light"); color: theme("colors.wine.deep"); }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(122,31,43,.16); border-radius: 999px;
+    border: 3px solid transparent; background-clip: content-box;
+  }
+  ::-webkit-scrollbar-track { background: transparent; }
+}
+
+@layer components {
+  /* ---- 70%: clean premium minimalism. The default surface. ---- */
+  .panel {
+    @apply bg-surface border border-line rounded-2xl shadow-card;
+  }
+  html.dark .panel { @apply bg-white/[.04] border-white/10; }
+
+  /* ---- 30%: glass. Reserved for floating and elevated surfaces only:
+         the auth card, modals, AI insight panels, sticky action bars. ---- */
+  .glass {
+    background: rgba(255, 255, 255, 0.66);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    @apply border border-white/60 rounded-3xl shadow-glass;
+  }
+  html.dark .glass {
+    background: rgba(90, 20, 32, 0.55);
+    @apply border-white/10;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-line bg-white/70 px-4 py-3 text-[0.9375rem]
+           text-ink placeholder:text-ink-faint transition-all duration-200
+           focus:border-wine/35 focus:bg-white focus:outline-none
+           focus:ring-4 focus:ring-wine/[.07];
+  }
+  html.dark .field { @apply bg-white/5 border-white/10 text-white; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3
+           text-sm font-medium transition-all duration-200
+           disabled:opacity-45 disabled:cursor-not-allowed active:scale-[.985];
+  }
+
+  .btn-primary {
+    @apply btn text-white shadow-[0_2px_10px_-2px_rgba(90,20,32,.4)]
+           hover:shadow-[0_6px_20px_-4px_rgba(90,20,32,.5)];
+    background: linear-gradient(135deg, theme("colors.wine.DEFAULT"), theme("colors.wine.deep"));
+  }
+
+  .btn-ghost {
+    @apply btn border border-line bg-white/60 text-ink hover:bg-white hover:border-line-strong;
+  }
+  html.dark .btn-ghost { @apply bg-white/5 border-white/10 text-white hover:bg-white/10; }
+
+  .btn-quiet { @apply btn px-3 py-2 text-ink-muted hover:bg-canvas-tint hover:text-ink; }
+  html.dark .btn-quiet { @apply hover:bg-white/10; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1
+           text-micro font-medium tracking-tight;
+  }
+
+  /* Peach light-wash used behind AI/intelligence surfaces. */
+  .wash-peach {
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgba(248,199,181,.42) 0%, transparent 58%),
+      radial-gradient(90% 80% at 100% 0%, rgba(252,230,220,.55) 0%, transparent 60%);
+  }
+}
+
+/* Motion is opt-out-aware throughout. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

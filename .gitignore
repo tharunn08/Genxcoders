@@ -1,0 +1,14 @@
+# Secrets — never commit these
+.env
+.env.local
+.env.*.local
+*.pem
+
+node_modules/
+dist/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.tsbuildinfo
+.DS_Store
